@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 04 Starter Template</title>
+    <title>Map of locations that are important to me</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
@@ -62,7 +62,7 @@
 
 <body>
 
-	<h1>map title</h1>
+	<h1>East Coast Cities Close to My Heart</h1>
 
     <div id='map'></div>
 
@@ -70,9 +70,9 @@
 		
 		<h2>about this map</h2>
 		
-		<p>Map authored by me, MY NAME</p>
+		<p>Map authored by Stephanie Bosits</p>
 
-		<p>Additional information about <a href="#">the data</a> and map goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. </p>
+		<p>This map depicts locations which are very important to me as I have family in these areas and visit them frequently. The location and populated information was obtained from Google maps and wikipedia. Enjoy!</p>
 
 	</section>
 	
@@ -82,8 +82,8 @@
 
 		// initial map options
 		var options = {
-            center: [0, 0],
-            zoom: 2
+            center: [39.954420, -75.17366],
+            zoom: 4
         }
 		
 		// instantiate Leaflet map object
@@ -93,25 +93,40 @@
 		var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
 });
+        
 		// add tiles to map
         map.addLayer(tiles);
             
 		// variable to hold string value of city name
-		var cityName = "Denver";
-		
-		// variable to hold number value of city population
-		var cityPopulation = 649495;
+		var cities = ["Augusta", "Savannah", "Philadelphia"]
         
+		var cityCoordinates = [[44.316891, -69.773272], [32.059957, -81.113868], [39.954420, -75.17366]]
+        
+		// variable to hold number value of city population
+		var cityPop = [18793, 142772, 3800000]
+        var cityCapitals = [true, false, false]
+        
+        for (var i = 0; i < cities.length; i++){
+            var cityName = cities[i];
+            var cityCoords = cityCoordinates[i];
+            var cityPopulation = cityPop[i];
+            var cityCaps = cityCapitals[i];
+
 		// build a string with HTML tags and content
+        if (cityCaps == true){
         var popup = "<b>" + cityName + "</b><br>" +
-                    "<b>population</b>: " + cityPopulation;
+                    "<b>population</b>: " + cityPopulation + "</b><br>" + "This is the state's capital";}
+            
+        else{ var popup = "<b>" + cityName + "</b><br>" +
+            "<b>population</b>: " + cityPopulation;} 
+            
 
         // create a Leaflet marker at the coordinates of Denver, CO
 		// add it to the map
 		// and bind the popup content to the marker.
-        L.marker([39.74, -104.99]).addTo(map)
+        L.marker(cityCoords).addTo(map)
 			.bindPopup(popup);
-              
+        }
     </script>
     
 </body>
