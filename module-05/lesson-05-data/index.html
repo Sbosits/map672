@@ -12,7 +12,14 @@
 
 <script>
 /* JavaScript code goes here! */
-
+function outerFunction(message) {
+    console.log(message);
+    var innerFunction = function(message) {
+        console.log(message);
+    };
+    innerFunction("I’m inside!");
+}
+outerFunction("i'm outside!");
 </script>
     
 </body>
