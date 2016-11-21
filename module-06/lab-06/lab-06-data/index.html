@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 06 Starter</title>
+    <title>Cities near national parks that I have visited</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
@@ -47,7 +47,18 @@
             font-weight: bold;
             text-decoration: none;
         }
-
+        .njBlue {
+            color: #005daa;
+            font-weight: bold;
+        }
+        .meRed {
+            color: #ff0707;
+            font-weight: bold;
+        }
+        .vaGreen {
+            color: #15b500;
+            font-weight: bold;
+        }
         a:hover {
             text-decoration: underline;
         }
@@ -62,17 +73,16 @@
 </head>
 
 <body>
-    <h1>map title</h1>
+    <h1>Major Citites Near National Parks that I have Visited</h1>
 
     <div id='map'></div>
 
 
     <section>
 
-        <p>Map authored by me, MY NAME</p>
+        <p>Map authored by Stephanie Bosits </p>
 
-        <p>Additional information about <a href="#">the data</a> and map goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus
-            luctus. </p>
+        <p>This map shows major cities near some of the National Parks that I have visited on the East Coast.Data was obtained through google and wikipedia</p>
 
     </section>
 
@@ -81,8 +91,8 @@
 
     <script>
         var map = L.map('map', {
-            center: [38.96, -85.36],
-            zoom: 8,
+            center: [40.916882, -74.172867],
+            zoom: 5,
         });
 
         var tiles = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
@@ -91,16 +101,47 @@
         });
         map.addLayer(tiles);
 
-        // Begin writing/modifying code for Lab 06 here
 
-        var cities = [{
-            name: "Louisville",
+
+        var cities =[
+            {name: "Paterson",
             properties: {
-                coordinates: [38.25, -85.7667],
-                population: 756832,
-                state: "KY"
-            }
-        }];
+                coordinates: [40.916882, -74.172867],
+                population: 145948,
+                park: "Great Falls",
+                state: "NJ"}},
+            {name: "BarHarbor",
+            properties: {
+                coordinates: [44.389915, -68.214224],
+                population: 5235,
+                park: "Acadia",
+                state: "ME"}},     
+            {name: "Harrisonburg",
+            properties: {
+                coordinates: [38.450583, -78.866379],
+                population: 51395,
+                park: "Shenandoah",
+                state: "VA"}}];
+    
+
+
+for(var i in cities){
+    var props = cities[i].properties;
+    var popups = buildPopups(cities[i].name, props.population, props.state, props.park);
+    L.marker(props.coordinates).addTo(map)
+    .bindPopup(popups);}
+        
+function buildPopups(city, pop, state, park){
+    if(state == "NJ"){
+        var colorClass = "njBlue";}
+    else if(state == "VA"){
+        var colorClass = "vaGreen";}
+    else if(state == "ME"){
+        var colorClass = "meRed";}
+return "<div class =" + colorClass + "><b>" + city + "</b><br>" + "<b>Population</b>: " + pop.toLocaleString() + "</b><br>" + "<b>Park Name</b>: " + park + "<div>";}
+
+
+    
     </script>
 
 </body>
