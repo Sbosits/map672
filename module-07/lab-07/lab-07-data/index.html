@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 07 Template</title>
+    <title>Showing distance</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
@@ -70,30 +70,35 @@
 </head>
 
 <body>
-  <h1>This is the title to my awesome map.</h1>
+  <h1>How Far to the Red Iquana?</h1>
 
  <div id='map'></div>
 
  <section>
-   <h2>about this map</h2>
+   <h2>Click anywhere to see the distance from that location to the Red Iquana restaurant in Salt Lake City!</h2>
 
-   <p>Map authored by me, MY NAME</p>
+   <p>Map authored by Stephanie Bosits</p>
 
-   <p>Additional information about <a href="#">the data</a> and map goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis urna magna, maximus nec laoreet sit amet, dictum ultricies nibh. Ut id auctor lacus. Nam a dolor et justo luctus luctus. </p>
+   <p>If you ever have the irresistable craving to take plan trip to the Req Iquana, you can now see how close you or any given location is to the restuarant with just one click. This map was created with a basemap provided by ESRI. Enjoy!</p>
 
  </section>
 
     <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
   	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script>
-
+    
     var options = {
         center: [40.74,-110.61],
         zoom: 6
     }
 
     var map = L.map('map', options);
-
+        
+        
+var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC'});    
+map.addLayer(tiles);
+        
     var redIguana = L.latLng(40.7718,-111.9124);
 
     L.marker(redIguana, {
@@ -103,11 +108,27 @@
         })
     }).addTo(map);
 
-    map.on('click', function(e){
+    
+    var userloc = map.on('click', function(e){
+            var label = e.latlng;
+            var point = L.marker(label, {
+                draggable: true}).addTo(map)
+            var position = point.getLatLng();
+            var distance = redIguana.distanceTo(position)
+            console.log(distance);
+            var popup = L.popup()
+                .setLatLng(label)
+                .setContent(distance.toLocaleString() + ' km from Red Iguana')
+                .openOn(map);});
 
-        console.log(e.latlng);
 
-    });
+
+        
+        
+        
+
+        
+        
 
     </script>
 
