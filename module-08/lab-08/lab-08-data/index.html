@@ -47,15 +47,17 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>Hydroelectric Power Plants Across the US</h1>
+        <h2>This map displays power plants that generate electrical power via hydrological resources.</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
+        <p>Map authored by Stephanie Bosits </p>
+        <p>The data used to create this map was obtained from the <a href="http://www.eia.gov/electricity/data/eia923">EIA's form 923</a>
+        </p>
+        
     </footer>
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
     <script src="power-plants.js"></script>
@@ -73,18 +75,47 @@
       });
 
       tiles.addTo(map);
-
-      L.geoJson(plants, {
-          pointToLayer: function(feature,latlng) {
-              return L.circleMarker(latlng, {
-                 color: 'orange',
-                 weight: 1,
-                 fillColor: 'yellow',
-                 fillOpacity: 1,
-                 radius: 2
-              });
-          }
-      }).addTo(map);
+        
+    plants.features.sort(function(a, b) {
+    return b.properties.capacity_mw - a.properties.capacity_mw;
+    });
+        
+    L.geoJson(plants, {
+        pointToLayer: function(feature,latlng) {
+            return L.circleMarker(latlng, {
+            color: 'green',
+            weight: 1,
+            fillColor: 'blue',
+            fillOpacity: .8,
+            radius: getRadius(feature.properties.capacity_mw)
+            });
+        },
+        filter: function(feature, layer) {
+            if(feature.properties.fuel_source.Hydro){
+                return feature;   
+            }
+        },
+        onEachFeature : function(feature,layer) {
+            layer.on('mouseover', function() {
+                layer.setStyle({
+                fillColor: 'yellow'
+                });
+            }),
+            layer.on('mouseout', function() {
+                layer.setStyle({
+                fillColor: 'blue'
+                });
+            });
+            layer.bindPopup('Facility Name: ' + feature.properties.plant_name + "</b><br>" + 'Capacity Produced: ' + feature.properties.capacity_mw + ' MH');
+        },
+    }).addTo(map);
+    
+        
+        
+    function getRadius(area) {
+        var radius = Math.sqrt(area/Math.PI);
+        return radius * .6;  
+    }
 
 
     </script>
