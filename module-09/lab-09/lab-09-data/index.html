@@ -108,28 +108,46 @@ for(var layer in layerInfo) {
                 fillColor: layerInfo[layer].color,
                 radius: getRadius(feature.properties.fuel_source[layerInfo[layer].source])
             }
-        },
-        onEachFeature : function(feature,layer) {
-            map.on('click', function(e) {
-                var distance = e.latlng.distanceTo(layer.getLatLng())/1000; // distance as km
-                if(distance > 500)  {
-                    layer.setStyle({
-                        stroke: false,
-                        fill: false
-                    });
-                }
-                else {
-                    layer.setStyle({
-                        stroke: true,
-                        fill: true
-                    });
-                }
-                layer.bindPopup('Facility Name: ' + feature.properties.plant_name + "</b><br>" + 'Fuel Source: ' + feature.properties.fuel_source[layer] + "</b><br>" + 'Distance from location: '+ distance.toLocaleString() + 'KM');
-            })
-
-        },
+        }
     }).addTo(map);
 }
+
+map.on('click', function(e) {
+
+    for(var l in geoJsonLayers) {
+
+        geoJsonLayers[l].eachLayer(function(layer) {
+
+          var distance = e.latlng.distanceTo(layer.getLatLng())/1000; // distance as km
+          if(distance > 500)  {
+              layer.setStyle({
+                  stroke: false,
+                  fill: false
+              });
+          }
+          else {
+              layer.setStyle({
+                  stroke: true,
+                  fill: true
+              });
+          }
+          // store a reference to current fuel source
+          var fuelSource = layerInfo[l].source;
+
+          // store reference to source quantity
+          var fuelSourceAmount = layer.feature.properties.fuel_source[layerInfo[l].source];
+
+          // bind the popup
+          layer.bindPopup('Facility Name: ' +
+          layer.feature.properties.plant_name + "</b><br>" +
+          'Fuel Source: ' + fuelSource + ', ' + fuelSourceAmount + 'MW<br>' +
+          'Distance from location: '+ distance.toLocaleString() + 'KM');
+
+        });
+
+
+    }
+});
 
 
 
