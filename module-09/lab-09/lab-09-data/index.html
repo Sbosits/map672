@@ -67,7 +67,7 @@
           zoom: 4,
       });
 
-        
+
 var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
   subdomains: 'abcd',
@@ -83,7 +83,7 @@ var layerInfo = {
     solarLayer: {source:"Solar", color:'#fffb16'}
 };
 
-var geoJsonLayers = {};        
+var geoJsonLayers = {};
 
 
 var commonStyles = {
@@ -92,7 +92,7 @@ var commonStyles = {
         fillOpacity: .8
 }
 
-for(var layer in layerInfo) {     
+for(var layer in layerInfo) {
     geoJsonLayers[layer] = L.geoJson(plants, {
         pointToLayer: function(feature,latlng) {
             return L.circleMarker(latlng, commonStyles);
@@ -108,54 +108,72 @@ for(var layer in layerInfo) {
                 fillColor: layerInfo[layer].color,
                 radius: getRadius(feature.properties.fuel_source[layerInfo[layer].source])
             }
-        },
-        onEachFeature : function(feature,layer) {
-            map.on('click', function(e) {
-                var distance = e.latlng.distanceTo(layer.getLatLng())/1000; // distance as km
-                if(distance > 500)  {
-                    layer.setStyle({
-                        stroke: false,
-                        fill: false
-                    });  
-                }
-                else {
-                    layer.setStyle({
-                        stroke: true,
-                        fill: true  
-                    });  
-                }
-                layer.bindPopup('Facility Name: ' + feature.properties.plant_name + "</b><br>" + 'Fuel Source: ' + feature.properties.fuel_source[layer] + "</b><br>" + 'Distance from location: '+ distance.toLocaleString() + 'KM');
-            })
-            
-        },
-    }).addTo(map);        
+        }
+    }).addTo(map);
 }
+
+map.on('click', function(e) {
+
+    for(var l in geoJsonLayers) {
+
+        geoJsonLayers[l].eachLayer(function(layer) {
+
+          var distance = e.latlng.distanceTo(layer.getLatLng())/1000; // distance as km
+          if(distance > 500)  {
+              layer.setStyle({
+                  stroke: false,
+                  fill: false
+              });
+          }
+          else {
+              layer.setStyle({
+                  stroke: true,
+                  fill: true
+              });
+          }
+          // store a reference to current fuel source
+          var fuelSource = layerInfo[l].source;
+
+          // store reference to source quantity
+          var fuelSourceAmount = layer.feature.properties.fuel_source[layerInfo[l].source];
+
+          // bind the popup
+          layer.bindPopup('Facility Name: ' +
+          layer.feature.properties.plant_name + "</b><br>" +
+          'Fuel Source: ' + fuelSource + ', ' + fuelSourceAmount + 'MW<br>' +
+          'Distance from location: '+ distance.toLocaleString() + 'KM');
+
+        });
+
+
+    }
+});
 
 
 
 
 function getRadius(val) {
     var radius = Math.sqrt(val/Math.PI);
-    return radius * .8;   
+    return radius * .8;
 }
-              
+
 
 function getRadius(val) {
     var radius = Math.sqrt(val/Math.PI);
-    return radius * .8;   
+    return radius * .8;
 }
-     
+
 
 var sourcesLabels = {
-    "<b style='color:#8fe63e; text-shadow: 0px 0px 1px #333;'>Nuclear</b>": geoJsonLayers.nuclearLayer,
-    "<b style='color:#a6cee3; text-shadow: 0px 0px 1px #333;'>Wind</b>": geoJsonLayers.windLayer,
+    "<b style='color:#8fe63e;'>Nuclear</b>": geoJsonLayers.nuclearLayer,
+    "<b style='color:#a6cee3;'>Wind</b>": geoJsonLayers.windLayer,
     "<b style='color:#ffff99; text-shadow: 0px 0px 1px #333;'>Solar</b>": geoJsonLayers.solarLayer
 }
 
 L.control.layers(null, sourcesLabels, { collapsed:false }).addTo(map);
 
 
-        
+
 </script>
 
 </body>
