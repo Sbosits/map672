@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 09 Template</title>
+    <title>plant powers</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
@@ -47,15 +47,15 @@
 
 <body>
     <header>
-        <h1>Map Title</h1>
-        <h2>Map Subtitle</h2>
+        <h1>Nuclear, Wind, and Solar Power Plants Across the US</h1>
+        <h2>Click anywhere on the map to view power plants based on the above fuel sources within 500 KM</h2>
     </header>
 
     <div id='map'></div>
 
     <footer>
-        <p>Map authored by YOUR NAME</p>
-        <p>Additional information about the data and map goes here.</p>
+        <p>Map authored by Stephanie Bosits</p>
+        <p>This interactive map is useful for viewing and obtaining information about nuclear, wind, and solar power plants within 500 KM of any given location. The data used to create this map was obtained from the <a href="http://www.eia.gov/electricity/data/eia923">EIA's form 923</a></p>
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
@@ -67,15 +67,96 @@
           zoom: 4,
       });
 
-      var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-          subdomains: 'abcd',
-          maxZoom: 19
-      });
+        
+var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+});
 
-      tiles.addTo(map);
+tiles.addTo(map);
 
-    </script>
+
+var layerInfo = {
+    nuclearLayer: {source:"Nuclear", color:'#8fe63e'},
+    windLayer: {source:"Wind", color:'#3ecfe6'},
+    solarLayer: {source:"Solar", color:'#fffb16'}
+};
+
+var geoJsonLayers = {};        
+
+
+var commonStyles = {
+        weight: 1,
+        stroke: 1,
+        fillOpacity: .8
+}
+
+for(var layer in layerInfo) {     
+    geoJsonLayers[layer] = L.geoJson(plants, {
+        pointToLayer: function(feature,latlng) {
+            return L.circleMarker(latlng, commonStyles);
+        },
+        filter: function(feature) {
+            if(feature.properties.fuel_source[layerInfo[layer].source]) {
+                return feature;
+            }
+        },
+        style: function(feature) {
+            return {
+                color: layerInfo[layer].color,
+                fillColor: layerInfo[layer].color,
+                radius: getRadius(feature.properties.fuel_source[layerInfo[layer].source])
+            }
+        },
+        onEachFeature : function(feature,layer) {
+            map.on('click', function(e) {
+                var distance = e.latlng.distanceTo(layer.getLatLng())/1000; // distance as km
+                if(distance > 500)  {
+                    layer.setStyle({
+                        stroke: false,
+                        fill: false
+                    });  
+                }
+                else {
+                    layer.setStyle({
+                        stroke: true,
+                        fill: true  
+                    });  
+                }
+                layer.bindPopup('Facility Name: ' + feature.properties.plant_name + "</b><br>" + 'Fuel Source: ' + feature.properties.fuel_source[layer] + "</b><br>" + 'Distance from location: '+ distance.toLocaleString() + 'KM');
+            })
+            
+        },
+    }).addTo(map);        
+}
+
+
+
+
+function getRadius(val) {
+    var radius = Math.sqrt(val/Math.PI);
+    return radius * .8;   
+}
+              
+
+function getRadius(val) {
+    var radius = Math.sqrt(val/Math.PI);
+    return radius * .8;   
+}
+     
+
+var sourcesLabels = {
+    "<b style='color:#8fe63e; text-shadow: 0px 0px 1px #333;'>Nuclear</b>": geoJsonLayers.nuclearLayer,
+    "<b style='color:#a6cee3; text-shadow: 0px 0px 1px #333;'>Wind</b>": geoJsonLayers.windLayer,
+    "<b style='color:#ffff99; text-shadow: 0px 0px 1px #333;'>Solar</b>": geoJsonLayers.solarLayer
+}
+
+L.control.layers(null, sourcesLabels, { collapsed:false }).addTo(map);
+
+
+        
+</script>
 
 </body>
 
