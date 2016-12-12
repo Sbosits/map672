@@ -3,7 +3,7 @@
 
 <head>
     <meta charset=utf-8 />
-    <title>Lab 08 Starter</title>
+    <title>Hydroelectric Power Generation</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
@@ -57,7 +57,7 @@
         <p>Map authored by Stephanie Bosits </p>
         <p>The data used to create this map was obtained from the <a href="http://www.eia.gov/electricity/data/eia923">EIA's form 923</a>
         </p>
-        
+
     </footer>
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
     <script src="power-plants.js"></script>
@@ -75,15 +75,15 @@
       });
 
       tiles.addTo(map);
-        
+
     plants.features.sort(function(a, b) {
     return b.properties.capacity_mw - a.properties.capacity_mw;
     });
-        
+
     L.geoJson(plants, {
         pointToLayer: function(feature,latlng) {
             return L.circleMarker(latlng, {
-            color: 'green',
+            color: 'darkblue',
             weight: 1,
             fillColor: 'blue',
             fillOpacity: .8,
@@ -92,7 +92,7 @@
         },
         filter: function(feature, layer) {
             if(feature.properties.fuel_source.Hydro){
-                return feature;   
+                return feature;
             }
         },
         onEachFeature : function(feature,layer) {
@@ -109,12 +109,12 @@
             layer.bindPopup('Facility Name: ' + feature.properties.plant_name + "</b><br>" + 'Capacity Produced: ' + feature.properties.capacity_mw + ' MH');
         },
     }).addTo(map);
-    
-        
-        
+
+
+
     function getRadius(area) {
         var radius = Math.sqrt(area/Math.PI);
-        return radius * .6;  
+        return radius * .6;
     }
 
 
