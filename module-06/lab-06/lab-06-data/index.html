@@ -47,18 +47,22 @@
             font-weight: bold;
             text-decoration: none;
         }
+
         .njBlue {
             color: #005daa;
             font-weight: bold;
         }
+
         .meRed {
             color: #ff0707;
             font-weight: bold;
         }
+
         .vaGreen {
             color: #15b500;
             font-weight: bold;
         }
+
         a:hover {
             text-decoration: underline;
         }
@@ -103,45 +107,51 @@
 
 
 
-        var cities =[
-            {name: "Paterson",
+        var cities = [{
+            name: "Paterson",
             properties: {
                 coordinates: [40.916882, -74.172867],
                 population: 145948,
                 park: "Great Falls",
-                state: "NJ"}},
-            {name: "BarHarbor",
+                state: "NJ"
+            }
+        }, {
+            name: "Bar Harbor",
             properties: {
                 coordinates: [44.389915, -68.214224],
                 population: 5235,
                 park: "Acadia",
-                state: "ME"}},     
-            {name: "Harrisonburg",
+                state: "ME"
+            }
+        }, {
+            name: "Harrisonburg",
             properties: {
                 coordinates: [38.450583, -78.866379],
                 population: 51395,
                 park: "Shenandoah",
-                state: "VA"}}];
-    
+                state: "VA"
+            }
+        }];
 
 
-for(var i in cities){
-    var props = cities[i].properties;
-    var popups = buildPopups(cities[i].name, props.population, props.state, props.park);
-    L.marker(props.coordinates).addTo(map)
-    .bindPopup(popups);}
-        
-function buildPopups(city, pop, state, park){
-    if(state == "NJ"){
-        var colorClass = "njBlue";}
-    else if(state == "VA"){
-        var colorClass = "vaGreen";}
-    else if(state == "ME"){
-        var colorClass = "meRed";}
-return "<div class =" + colorClass + "><b>" + city + "</b><br>" + "<b>Population</b>: " + pop.toLocaleString() + "</b><br>" + "<b>Park Name</b>: " + park + "<div>";}
 
+        for (var i in cities) {
+            var props = cities[i].properties;
+            var popups = buildPopups(cities[i].name, props.population, props.state, props.park);
+            L.marker(props.coordinates).addTo(map)
+                .bindPopup(popups);
+        }
 
-    
+        function buildPopups(city, pop, state, park) {
+            if (state == "NJ") {
+                var colorClass = "njBlue";
+            } else if (state == "VA") {
+                var colorClass = "vaGreen";
+            } else if (state == "ME") {
+                var colorClass = "meRed";
+            }
+            return "<div class =" + colorClass + "><b>" + city + "</b><br>" + "<b>Population</b>: " + pop.toLocaleString() + "</b><br>" + "<b>Park Name</b>: " + park + "<div>";
+        }
     </script>
 
 </body>
