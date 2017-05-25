@@ -2,120 +2,123 @@
 <html>
 
 <head>
-    <meta charset=utf-8 />
-    <title>Web Page Template</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+	<meta charset=utf-8 />
+	<title>My HomeTown: Lake Hiawatha, NJ</title>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-    
-    <style>
-    body {
-    margin: 0;
-    padding: 0;
-    background: #f5f5f5;
-    font-family: sans-serif;
-    color: #3d3d3d;}
-    section {
-    width: 960px;
-    margin: 20px auto;
-    }
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 
-    h1 {
-    width: 960px;
-    margin: 20px auto;
-    font-family: serif;
-    letter-spacing: .04em;
-    }
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background: #f5f5f5;
+			font-family: sans-serif;
+			color: #3d3d3d;
+		}
+		
+		section {
+			width: 960px;
+			margin: 20px auto;
+		}
+		
+		h1 {
+			width: 960px;
+			margin: 20px auto;
+			font-family: serif;
+			letter-spacing: .04em;
+		}
+		
+		h2 {
+			font-family: serif;
+			letter-spacing: .04em;
+		}
+		
+		p {
+			font-size: 1em;
+			line-height: 1.5em;
+		}
+		
+		a {
+			color: #005daa;
+			font-weight: bold;
+			text-decoration: none;
+		}
+		
+		a:hover {
+			text-decoration: underline;
+		}
+		
+		ul {
+			padding-left: 20px;
+		}
+		
+		li {
+			margin: 10px 0
+		}
+		
+		#map {
+			width: 960px;
+			height: 540px;
+			margin: 10px auto;
+			border: 2px solid #d3d3d3;
+		}
+	</style>
 
-    h2 {
-    font-family: serif;
-    letter-spacing: .04em;
-    }
-    p {
-    font-size: 1em;
-    line-height: 1.5em;
-    }
 
-    a {
-    color: #005daa;
-    font-weight: bold;
-    text-decoration: none;
-    }
-
-    a:hover {
-    text-decoration: underline;
-    }
-
-    ul {
-    padding-left: 20px;
-    }
-
-    li {
-    margin: 10px 0
-    }
-    #map {
-    width: 960px;
-    height: 540px;
-    margin: 10px auto;
-    border: 2px solid #d3d3d3;
-    }
-    </style>
-    
-    
 </head>
 
 <body>
 
 	<h1>Awesome map!</h1>
-    
-    <div id='map'></div>
-    
-    <section>
-    <h2>About this map</h2>
-        <p>Map authored by Stephanie Bosits</p>
-   <p>I grew up in Lake Hiawatha, New Jersey which is actually a part of Parsippany Troy Hills Township. The town is divided by a main street, Beverwyck Road, which divides the town into an upper and lower portion. I lived in the lower portion near the Rockaway river which went downhill from the main street while upper Lake Hiawatha went up hill. There was always a feud, all in good fun, between the two divisions of town and once we got to middle school we were going to school with kids from Parsippany proper which created another distinction. Parsippany is a large town as a whole, compromised of 50,649 which meant there were two middle schools and two high schools. Since high school I moved about 5 times all within the limits of Parsippany but never back within the Lake Hiawatha area. Whenever I reunite with old friends though, there is always a sense of pride from growing up within lower Lake Hiawatha. </p>
-        
-    <P>Just like any map, there is a limitation to what can be communicated. Because all maps are, "rendering the broad swaths of worldly complexity and enormity in miniature form for a discrete purpose," there are inherent limitations in displaying a map that do not allow for the complete depiction of an all seeing eye. This map, for instance displays an overview of the town that can be useful for general information or direction purposes. It does not, however, show the "cultural division" of Lake Hiawatha from the rest of the Parsippany township or how significant the boundary between the upper and lower parts of the town can seem as a kid. If shown from another perspective, created using different data, projected differently, or created for a different purpose, the map would look completely different. In this instance and every other there are always irregularities in attempting to "mirror" nature via the cartographic gaze.</P>    
 
-    <ul>
-    <li>See my projects on GitHub: <a href="https://github.com/Sbosits/map672">New Maps Plus Repository</a></li>
-    </ul>
-    </section>
-    
+	<div id='map'></div>
+
+	<section>
+		<h2>About this map</h2>
+		<p>Map authored by Stephanie Bosits</p>
+		<p>I grew up in Lake Hiawatha, New Jersey which is actually a part of Parsippany Troy Hills Township. The town is divided by a main street, Beverwyck Road, which divides the town into an upper and lower portion. I lived in the lower portion near the Rockaway river which went downhill from the main street while upper Lake Hiawatha went up hill. There was always a feud, all in good fun, between the two divisions of town and once we got to middle school we were going to school with kids from Parsippany proper which created another distinction. Parsippany is a large town as a whole, compromised of 50,649 which meant there were two middle schools and two high schools. Since high school I moved about 5 times all within the limits of Parsippany but never back within the Lake Hiawatha area. Whenever I reunite with old friends though, there is always a sense of pride from growing up within lower Lake Hiawatha. </p>
+
+		<p>Just like any map, there is a limitation to what can be communicated. Because all maps are, "rendering the broad swaths of worldly complexity and enormity in miniature form for a discrete purpose," there are inherent limitations in displaying a map that do not allow for the complete depiction of an all seeing eye. This map, for instance displays an overview of the town that can be useful for general information or direction purposes. It does not, however, show the "cultural division" of Lake Hiawatha from the rest of the Parsippany township or how significant the boundary between the upper and lower parts of the town can seem as a kid. If shown from another perspective, created using different data, projected differently, or created for a different purpose, the map would look completely different. In this instance and every other there are always irregularities in attempting to "mirror" nature via the cartographic gaze.</p>
+
+		<ul>
+			<li>See my projects on GitHub: <a href="https://github.com/Sbosits/map672">New Maps Plus Repository</a></li>
+		</ul>
+	</section>
+
 	<script>
+		document.querySelector('h1').innerHTML = 'Lake Hiawatha, NJ';
+		var map = document.getElementById('map');
+		map.style.background = '#4d4a9f';
+		var newListItem = document.createElement('li');
 
-	document.querySelector('h1').innerHTML = 'Lake Hiawatha, NJ';
-    var map = document.getElementById('map');
-    map.style.background = '#4d4a9f';
-    var newListItem = document.createElement('li');
 
-        
-    var options = {
-    center: [40.882416, -74.382525],
-    zoom: 12
-}
+		var options = {
+			center: [40.882416, -74.382525],
+			zoom: 12
+		}
 
-var map = L.map('map', options);
+		var map = L.map('map', options);
 
-var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
-}).addTo(map);
+		var tiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+			subdomains: 'abcd',
+			maxZoom: 19
+		}).addTo(map);
 
-var message = 'My home town!';
+		var message = 'My home town!';
 
-L.marker(map.getCenter())
-    .bindTooltip(message)
-    .addTo(map)
-    .openTooltip();    
+		L.marker(map.getCenter())
+			.bindTooltip(message)
+			.addTo(map)
+			.openTooltip();
 	</script>
-    
+
 </body>
 
 </html>
